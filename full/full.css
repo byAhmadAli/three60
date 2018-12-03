@@ -46,6 +46,7 @@ body{
     padding: 5px 10px;
     cursor: pointer;
     display: none; 
+    color: #000;
 }
 .options ul.settings li:hover{
     background: #ddd;
