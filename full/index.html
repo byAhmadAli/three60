@@ -2,10 +2,10 @@
 <html>
     <head>
         <title>Full</title>
-        <script src='./libs/jquery.min.js' type='text/javascript'></script>
-        <script src='./libs/spritespin.min.js' type='text/javascript'></script>
-        <script src="./libs/three.min.js"></script>
-        <script src="./libs/panolens.min.js"></script>
+        <script src='../libs/jquery.min.js' type='text/javascript'></script>
+        <script src='../libs/spritespin.min.js' type='text/javascript'></script>
+        <script src="../libs/three.min.js"></script>
+        <script src="../libs/panolens.min.js"></script>
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="./full.css">
@@ -55,7 +55,7 @@
                     loadPano();
                     vrMode = false;
                 }else{
-                    loadSpin('./test1', 48);
+                    loadSpin('../test1', 48);
                     viewer.destory();
                     viewer = null;
                     $('.panolens-canvas').remove();
@@ -70,14 +70,14 @@
                 $('.spritespin').spritespin('api').exitFullscreen();
                 $('ul.settings').toggleClass('show');
                 $('#close-car, #open-car').toggleClass('show');
-                loadSpin('./test2', 52); 
+                loadSpin('../test2', 52); 
             });
 
             $('#close-car').click(function(){
                 $('.spritespin').spritespin('api').exitFullscreen();
                 $('ul.settings').toggleClass('show');
                 $('#close-car, #open-car').toggleClass('show');
-                loadSpin('./test1', 48);
+                loadSpin('../test1', 48);
             });
 
             function loadSpin(url, frames){
@@ -122,7 +122,7 @@
 
                 }
 
-                panorama = new PANOLENS.ImagePanorama( './assets/pano/default.JPG' );
+                panorama = new PANOLENS.ImagePanorama( '../assets/pano/default.JPG' );
                 panorama.addEventListener( 'progress', onProgress );
                 panorama.addEventListener( 'enter', onEnter );
 
@@ -135,7 +135,7 @@
             }
             
             
-            loadSpin('./test1', 48);
+            loadSpin('../test1', 48);
 
 
 
