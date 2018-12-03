@@ -1,0 +1,76 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #000;
+}
+.container{
+    position: relative;
+    width: 960px;
+    height: 540px;
+    margin: 70px auto;
+}
+.options{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 999999999;
+}
+
+.options i{
+    color: #fff;
+    cursor: pointer;
+    text-shadow: #000 1px 0 10px;
+    font-size: 18px;
+    padding: 5px;
+    float: right;
+}
+
+.options ul.settings{
+    margin: 0;
+    list-style: none;
+    background: #fff;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    position: absolute;
+    bottom: 45px;
+    min-width: 100px;
+    right: 10px;
+    display: none;
+}
+.options ul.settings li{
+    margin: 0;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: none; 
+}
+.options ul.settings li:hover{
+    background: #ddd;
+}
+
+.show{
+    display: block!important; 
+}
+
+canvas{
+    cursor: -webkit-grab; cursor: grab;
+}
+canvas.move{
+    cursor: -webkit-grabbing; cursor: grabbing;
+}
+
+#progress {
+    width: 0;
+    height: 5px;
+    position: fixed;
+    top: 0;
+    background: #fff;
+    -webkit-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+
+#progress.finish {
+    opacity: 0;
+}

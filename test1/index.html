@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>video</title>
+        <script src='../../libs/jquery.min.js' type='text/javascript'></script>
+        <script src='../../libs/spritespin.min.js' type='text/javascript'></script>
+    </head>
+    <body>
+        <div class="spritespin"></div>
+
+        <script>
+            $('.spritespin').spritespin({
+                source: SpriteSpin.sourceArray('./assets/{frame}.jpg', { frame: [1,39], digits: 2 }),
+                sourceZoom: SpriteSpin.sourceArray('./assets/{frame}.jpg', { frame: [1,39], digits: 2 }),
+                sense: -1,
+                width: 960,
+                height: 540,
+                animate: false,
+                frameTime: 1,
+                plugins: [
+                    'progress',
+                    '360',
+                    'drag',
+                    'blur',
+                    'zoom',
+                    'ease',
+                ],
+                sizeMode: 'fill', 
+            });
+        </script>
+    </body>
+</html>

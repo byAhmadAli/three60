@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Full</title>
+        <script src='../../libs/jquery.min.js' type='text/javascript'></script>
+        <script src='../../libs/spritespin.min.js' type='text/javascript'></script>
+        <script src="../../libs/three.min.js"></script>
+        <script src="../../libs/panolens.min.js"></script>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="./full.css">
+    </head>
+    <body>
+        <div id="progress"></div>
+        <div id="viewer-container" class="container">
+            <div class="spritespin"></div>
+            <div class="options">
+                <i class="fa fa-cog"></i>
+                <i class="fas fa-expand"></i>
+                <i class="fas fa-vr-cardboard"></i>
+                <ul class="settings">
+                    <li id="open-car" class="show">Open car</li>
+                    <li id="close-car">Close car</li>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+            var fullScreen = true;
+            var vrMode = true;
+            var viewer = null;
+            $('.fa-expand').click(function(e){
+                e.preventDefault();
+                $(this).toggleClass('fa-compress fa-expand');
+                if(fullScreen){
+                    $('.spritespin').spritespin('api').requestFullscreen();
+                    fullScreen = false;
+                }else{
+                    $('.spritespin').spritespin('api').exitFullscreen();
+                    fullScreen = true;
+                }
+            });
+            
+            $('.fa-cog').click(function(e) {
+                e.preventDefault();
+                $('ul.settings').toggleClass('show')
+            });
+
+            $('.fa-vr-cardboard').click(function(){
+                if(vrMode){
+                    $('.container').append($('.options'));
+                    $('.spritespin').spritespin('api').exitFullscreen();
+                    $(".spritespin").spritespin("destroy");
+                    $('.spritespin').hide();
+                    loadPano();
+                    vrMode = false;
+                }else{
+                    loadSpin('../test1', 48);
+                    viewer.destory();
+                    viewer = null;
+                    $('.panolens-canvas').remove();
+                    $('.spritespin').show();
+                    vrMode = true;
+                }
+                
+
+            });
+
+            $('#open-car').click(function(){
+                $('.spritespin').spritespin('api').exitFullscreen();
+                $('ul.settings').toggleClass('show');
+                $('#close-car, #open-car').toggleClass('show');
+                loadSpin('../test2', 52); 
+            });
+
+            $('#close-car').click(function(){
+                $('.spritespin').spritespin('api').exitFullscreen();
+                $('ul.settings').toggleClass('show');
+                $('#close-car, #open-car').toggleClass('show');
+                loadSpin('../test1', 48);
+            });
+
+            function loadSpin(url, frames){
+                $('.spritespin').spritespin({
+                    source: SpriteSpin.sourceArray(url+'/assets/{frame}.jpg', { frame: [1,frames], digits: 2 }),
+                    sourceZoom: SpriteSpin.sourceArray(url+'/assets/{frame}.jpg', { frame: [1,frames], digits: 2 }),
+                    sense: -1,
+                    width: 960,
+                    height: 540,
+                    animate: false,
+                    frameTime: 1,
+                    plugins: [
+                        'progress',
+                        '360',
+                        'drag',
+                        'blur',
+                        'zoom',
+                        'ease',
+                    ],
+                    sizeMode: 'fill'
+                });
+            }
+
+            function loadPano(){
+                var panorama, progressElement;
+                progressElement = document.getElementById( 'progress' );
+
+                function onEnter ( event ) {
+
+                    progressElement.style.width = 0;
+                    progressElement.classList.remove( 'finish' );
+
+                }
+
+                function onProgress ( event ) {
+
+                    progress = event.progress.loaded / event.progress.total * 100;
+                    progressElement.style.width = progress + '%';
+                    if ( progress === 100 ) {
+                        progressElement.classList.add( 'finish' );
+                    }
+
+                }
+
+                panorama = new PANOLENS.ImagePanorama( '../../assets/pano/default.JPG' );
+                panorama.addEventListener( 'progress', onProgress );
+                panorama.addEventListener( 'enter', onEnter );
+
+                viewer = new PANOLENS.Viewer({
+                    container: document.getElementById('viewer-container'),
+                    controlBar: false,
+                    autoHideControlBar: true,
+                });
+                viewer.add( panorama );
+            }
+            
+            
+            loadSpin('../test1', 48);
+
+
+
+            $('.spritespin').append($('.options'));
+            $('.spritespin').on('mousedown mouseup ', function(){
+                $('.spritespin canvas').toggleClass('move')
+            })
+        </script>
+    </body>
+</html>
