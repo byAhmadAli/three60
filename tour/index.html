@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tour</title>
+        <script src="../../libs/three.min.js"></script>
+        <script src="../../libs/panolens-offline.js"></script>
+        <link rel="stylesheet" type="text/css" href="./tour.css">
+    </head>
+    <body>
+        <div id="progress"></div>
+
+        <script>
+            var angle1, angle2, angle3, insideAngle1, progressElement;
+            progressElement = document.getElementById( 'progress' );
+
+            function onEnter ( event ) {
+
+                progressElement.style.width = 0;
+                progressElement.classList.remove( 'finish' );
+
+            }
+
+            function onProgress ( event ) {
+
+                progress = event.progress.loaded / event.progress.total * 100;
+                progressElement.style.width = progress + '%';
+                if ( progress === 100 ) {
+                    progressElement.classList.add( 'finish' );
+                }
+
+            }
+
+            angle1 = new PANOLENS.ImagePanorama( './assets/angle1/default.JPG' );
+            angle1.addEventListener( 'progress', onProgress );
+            angle1.addEventListener( 'enter', onEnter );
+
+            angle2 = new PANOLENS.ImagePanorama( './assets/angle2/default.JPG' );
+            angle2.addEventListener( 'progress', onProgress );
+            angle2.addEventListener( 'enter', onEnter );
+
+            angle3 = new PANOLENS.ImagePanorama( './assets/angle3/default.JPG' );
+            angle3.addEventListener( 'progress', onProgress );
+            angle3.addEventListener( 'enter', onEnter );
+
+            insideAngle1 = new PANOLENS.ImagePanorama( './assets/insideAngle1/default.JPG' );
+            insideAngle1.addEventListener( 'progress', onProgress );
+            insideAngle1.addEventListener( 'enter', onEnter );
+
+            angle1.link( angle2, new THREE.Vector3( 1000, -500, -1000 ) );
+            angle1.link( insideAngle1, new THREE.Vector3( 4000, -500, -1000 ) );
+            angle1.link( angle3, new THREE.Vector3( 2000, -500, -2000 ) );
+
+            angle2.link( angle1, new THREE.Vector3( 1000, -500, 2000 ) );
+            angle2.link( angle3, new THREE.Vector3( -500, -500, -1000 ) );
+            angle2.link( insideAngle1, new THREE.Vector3( 4000, -500, -1000 ) );
+
+            angle3.link( angle1, new THREE.Vector3( 500, -500, 2000 ) );
+            angle3.link( angle2, new THREE.Vector3( -500, -500, 2000 ) );
+            //angle3.link( insideAngle1, new THREE.Vector3( -1000, -500, -1000 ) );
+            angle3.link( insideAngle1, new THREE.Vector3( 4000, -500, 2000 ) );
+
+            insideAngle1.link( angle1, new THREE.Vector3( -2000, 200, -2000 ) );
+            insideAngle1.link( angle2, new THREE.Vector3( -500, 200, -2000 ) );
+            insideAngle1.link( angle3, new THREE.Vector3( 3000, -500, -1000 ) );
+
+            viewer = new PANOLENS.Viewer();
+            viewer.add( angle1, angle2, angle3, insideAngle1 );
+
+        </script>
+    </body>
+</html>
